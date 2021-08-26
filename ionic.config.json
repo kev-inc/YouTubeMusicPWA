@@ -1,0 +1,7 @@
+{
+  "name": "YouTube Music",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
