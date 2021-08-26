@@ -9,7 +9,7 @@ interface Tab1State {
     audioSrc: string
 }
 const Tab1: React.FC = () => {
-    const [videoId, setVideoId] = useState('fYvo4oZacbY')
+    const [videoId, setVideoId] = useState('https://youtu.be/F7nCDrf90V8')
     const [audioSrc, setAudioSrc] = useState('')
 
     useEffect(() => {
@@ -18,7 +18,8 @@ const Tab1: React.FC = () => {
 
     const retrieveMp3 = () => {
         setAudioSrc('')
-        fetch("https://www.yt-download.org/api/button/mp3/" + videoId)
+        const id = videoId.split('/')[3]
+        fetch("https://www.yt-download.org/api/button/mp3/" + id)
             .then(resp => resp.text())
             .then(resp => {
                 const $ = cheerio.load(resp)
