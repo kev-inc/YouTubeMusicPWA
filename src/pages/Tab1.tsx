@@ -55,7 +55,7 @@ const Tab1: React.FC = (props) => {
                         <audio controls autoPlay src={audioSrc} onPlay={onPlay} />
                     </div>
                 ) : (
-                    <div>Loading...</div>
+                    <div>{videoId.length > 0 ? 'Loading...' : 'No video selected'}</div>
                 )}
             </IonContent>
         </IonPage>
