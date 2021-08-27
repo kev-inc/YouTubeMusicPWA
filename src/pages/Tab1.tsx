@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonButton } from '@ionic/react';
 import cheerio from 'cheerio'
 import './Tab1.css';
 
-interface Tab1Props { }
-interface Tab1State {
-    videoId: string,
-    audioSrc: string
-}
-const Tab1: React.FC = () => {
-    const [videoId, setVideoId] = useState('https://youtu.be/F7nCDrf90V8')
+const Tab1: React.FC = (props) => {
+    const location = useLocation()
+    const params = new URLSearchParams(location.search)
+    const link = params.get('link') || ''
+    const [videoId, setVideoId] = useState(link)
     const [audioSrc, setAudioSrc] = useState('')
 
-    useEffect(() => {
-        retrieveMp3()
-    }, [])
 
     const retrieveMp3 = () => {
         setAudioSrc('')
