@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonButton } from '@ionic/react';
-import cheerio from 'cheerio'
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import './Tab1.css';
 
 const Tab1: React.FC = (props) => {
@@ -12,6 +11,12 @@ const Tab1: React.FC = (props) => {
     const [audioSrc, setAudioSrc] = useState('')
     const [videoMetadata, setVideoMetadata] = useState({})
 
+    useEffect(() => {
+        if (videoId.length > 0) {
+            retrieveMp3()
+        }
+    }, [videoId])
+
 
     const retrieveMp3 = () => {
         setAudioSrc('')
@@ -20,13 +25,12 @@ const Tab1: React.FC = (props) => {
             setVideoMetadata(json)
         })
         const id = videoId.split('/')[3]
-        fetch("https://www.yt-download.org/api/button/mp3/" + id)
-            .then(resp => resp.text())
-            .then(resp => {
-                const $ = cheerio.load(resp)
-                const links = $('div.download')
-                setAudioSrc(links.children().get(3).attribs.href)
-            })
+        fetch("https://py-youtube-dl.vercel.app/api?id=" + id)
+            .then(resp => resp.json())
+            .then(json => setAudioSrc(json['link']))
+    }
+
+    const onPlay = () => {
     }
 
 
@@ -40,22 +44,17 @@ const Tab1: React.FC = (props) => {
             <IonContent class="ion-text-center" fullscreen>
                 <IonHeader collapse="condense">
                     <IonToolbar>
-                        <IonTitle size="large">Tab 1</IonTitle>
+                        <IonTitle size="large">YouTube Music</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <IonItem>
-                    <IonLabel position="stacked">YouTube Link</IonLabel>
-                    <IonInput value={videoId} placeholder="Enter YouTube Link" onIonChange={e => setVideoId(e.detail.value!)}></IonInput>
-
-                </IonItem>
-                <IonButton expand="block" onClick={retrieveMp3}>Play!</IonButton>
-
-                <img src={videoMetadata['thumbnail_url']} width={videoMetadata['thumbnail_width']} alt='thumbnail'/>
-                <h3>{videoMetadata['title']}</h3>
-                {audioSrc.length > 0 && (
-                    <audio controls autoPlay>
-                        <source type="audio/mpeg" src={audioSrc} />
-                    </audio>
+                {audioSrc.length > 0 ? (
+                    <div>
+                        <img src={videoMetadata['thumbnail_url']} width={videoMetadata['thumbnail_width']} alt='thumbnail' />
+                        <h3>{videoMetadata['title']}</h3>
+                        <audio controls autoPlay src={audioSrc} onPlay={onPlay} />
+                    </div>
+                ) : (
+                    <div>Loading...</div>
                 )}
             </IonContent>
         </IonPage>

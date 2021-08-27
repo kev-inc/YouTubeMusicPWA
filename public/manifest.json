@@ -20,7 +20,7 @@
             "purpose": "maskable"
         }
     ],
-    "start_url": "/",
+    "start_url": "/tab2",
     "scope": "/",
     "display": "standalone",
     "theme_color": "#ffffff",
