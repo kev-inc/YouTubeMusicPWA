@@ -3,13 +3,13 @@ import { useHistory } from 'react-router-dom';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonInput, IonButton } from '@ionic/react';
 import './Tab2.css';
 
-const Tab2: React.FC = () => {
+const Tab2: React.FC<{playSong: (link: any) => void}> = ({playSong}) => {
     const [videoId, setVideoId] = useState('')
     const history = useHistory()
 
     const toPlayer = () => {
-        history.replace("/temp")
-        history.replace("/tab1?link=" + videoId)
+        playSong(videoId)
+        history.replace("/tab1")
     }
 
     return (
