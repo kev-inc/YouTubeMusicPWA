@@ -27,16 +27,16 @@ const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: stri
             fetch("https://py-youtube-dl.vercel.app/api?id=" + id)
                 .then(resp => resp.json())
                 .then(json => {
-                    const newAudio = new Audio(json['link'])
-                    setAudio(newAudio)
-                    setIsPlaying(false)
-                    setCurrentDuration(0)
-                    setDuration(0)
+                    setAudio(new Audio(json['link']))
+                    
                 })
         }
         if (videoLink.length > 0) {
             audio.pause()
             setAudio(new Audio())
+            setIsPlaying(false)
+            setCurrentDuration(0)
+            setDuration(0)
             retrieveMp3()
         }
     }, [videoLink])
@@ -96,7 +96,7 @@ const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: stri
 
             <IonFooter class="ion-text-center ion-padding">
                 <h3>{videoMetadata['title']}</h3>
-                <IonRange value={audio.currentTime} max={duration} onIonChange={seekSong}>
+                <IonRange value={currentDuration} max={duration} onIonChange={seekSong}>
                     <IonLabel slot="start">{convertToTime(currentDuration)}</IonLabel>
                     <IonLabel slot="end">{convertToTime(duration)}</IonLabel>
                 </IonRange>
