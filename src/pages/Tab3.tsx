@@ -1,5 +1,4 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonThumbnail, IonLabel } from '@ionic/react';
-import './Tab3.css';
 import React from 'react';
 import moment from 'moment'
 import { useHistory } from 'react-router';
@@ -26,8 +25,8 @@ const Tab3: React.FC<{ history: any[] }> = ({ history }) => {
                         <IonTitle size="large">History</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                {history.map(item => (
-                    <IonItem onClick={() => playHistory(item.link)}>
+                {history.map((item, index) => (
+                    <IonItem onClick={() => playHistory(item.link)} key={index}>
                         <IonThumbnail slot="start">
                             <img src={item['thumbnail']} alt='thumbnail' />
                         </IonThumbnail>

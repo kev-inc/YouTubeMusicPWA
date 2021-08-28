@@ -11,7 +11,6 @@ const ListenerPage: React.FC<{playSong: (link: any) => void}> = ({playSong}) => 
     useEffect(() => {
         const params = new URLSearchParams(location.search)
         const link = params.get('link') || ''
-        console.log(link)
         playSong(link)
         history.replace("/tab1")
     }, [])

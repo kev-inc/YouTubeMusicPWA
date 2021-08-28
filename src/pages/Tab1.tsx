@@ -3,21 +3,26 @@ import React, { useState, useEffect } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonIcon, IonRange, IonLabel, IonFooter } from '@ionic/react';
 import { play, pause, playForward, playBack } from 'ionicons/icons';
 
-import './Tab1.css';
-
 const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: string, link: string) => void }> = ({ videoLink, addToHistory }) => {
     const [videoMetadata, setVideoMetadata] = useState({})
-    const [audio, setAudio] = useState(new Audio())
+    const [audio] = useState(new Audio())
     const [isPlaying, setIsPlaying] = useState(false)
     const [currentDuration, setCurrentDuration] = useState(0)
     const [duration, setDuration] = useState(0)
 
-    var positionUpdater
+    // var positionUpdater
 
     audio.addEventListener('loadedmetadata', () => setDuration(audio.duration))
+    audio.addEventListener('loadeddata', () => playSong())
+    // audio.addEventListener('play', () => {
+    //     positionUpdater = 
+    // })
+    // audio.addEventListener('stop', () => clearInterval(positionUpdater))
 
     useEffect(() => {
+        setInterval(() => setCurrentDuration(audio.currentTime), 1000)
         const retrieveMp3 = () => {
+
             const youtube = require('youtube-metadata-from-url');
             youtube.metadata(videoLink).then(json => {
                 setVideoMetadata(json)
@@ -27,14 +32,12 @@ const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: stri
             fetch("https://py-youtube-dl.vercel.app/api?id=" + id)
                 .then(resp => resp.json())
                 .then(json => {
-                    setAudio(new Audio(json['link']))
-                    
+                    audio.src = json['link']
                 })
         }
         if (videoLink.length > 0) {
-            audio.pause()
-            setAudio(new Audio())
-            setIsPlaying(false)
+            pauseSong()
+            audio.currentTime = 0
             setCurrentDuration(0)
             setDuration(0)
             retrieveMp3()
@@ -42,15 +45,13 @@ const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: stri
     }, [videoLink])
 
     const playSong = () => {
-        setIsPlaying(true)
         audio.play()
-        positionUpdater = setInterval(() => setCurrentDuration(audio.currentTime), 1000)
-    }
+        setIsPlaying(true)
+    } 
 
     const pauseSong = () => {
-        setIsPlaying(false)
         audio.pause()
-        clearInterval(positionUpdater)
+        setIsPlaying(false)
     }
 
     const forwardSong = () => {
@@ -91,12 +92,12 @@ const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: stri
                 {'thumbnail_url' in videoMetadata && (
                     <img src={videoMetadata['thumbnail_url']} width={videoMetadata['thumbnail_width']} alt='thumbnail' />
                 )}
-                
+
             </IonContent>
 
             <IonFooter class="ion-text-center ion-padding">
                 <h3>{videoMetadata['title']}</h3>
-                <IonRange value={currentDuration} max={duration} onIonChange={seekSong}>
+                <IonRange value={currentDuration} min={0} max={duration} onIonChange={seekSong} disabled={duration === 0}>
                     <IonLabel slot="start">{convertToTime(currentDuration)}</IonLabel>
                     <IonLabel slot="end">{convertToTime(duration)}</IonLabel>
                 </IonRange>
@@ -106,7 +107,7 @@ const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: stri
                 ) : (
                         <IonButton onClick={playSong} size="large" fill="clear" disabled={duration === 0}><IonIcon slot="icon-only" icon={play} /></IonButton>
                     )}
-                <IonButton onClick={forwardSong} fill="clear" disabled={duration === 0}><IonIcon slot="icon-only" icon={playForward} /></IonButton>                
+                <IonButton onClick={forwardSong} fill="clear" disabled={duration === 0}><IonIcon slot="icon-only" icon={playForward} /></IonButton>
             </IonFooter>
         </IonPage>
     );

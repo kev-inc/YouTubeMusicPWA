@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonInput, IonButton } from '@ionic/react';
-import './Tab2.css';
 
 const Tab2: React.FC<{playSong: (link: any) => void}> = ({playSong}) => {
     const [videoId, setVideoId] = useState('')
