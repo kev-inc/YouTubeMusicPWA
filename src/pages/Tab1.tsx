@@ -29,7 +29,7 @@ const Tab1: React.FC = (props) => {
     }, [videoId])
 
 
-    
+
 
     const onPlay = () => {
     }
@@ -39,13 +39,13 @@ const Tab1: React.FC = (props) => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>YouTube Music</IonTitle>
+                    <IonTitle>Now Playing</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent class="ion-text-center" fullscreen>
                 <IonHeader collapse="condense">
                     <IonToolbar>
-                        <IonTitle size="large">YouTube Music</IonTitle>
+                        <IonTitle size="large">Now Playing</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 {audioSrc.length > 0 ? (
@@ -55,8 +55,8 @@ const Tab1: React.FC = (props) => {
                         <audio controls autoPlay src={audioSrc} onPlay={onPlay} />
                     </div>
                 ) : (
-                    <div>{videoId.length > 0 ? 'Loading...' : 'No video selected'}</div>
-                )}
+                        <div>{videoId.length > 0 ? 'Loading...' : 'No video selected'}</div>
+                    )}
             </IonContent>
         </IonPage>
     );
