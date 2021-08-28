@@ -10,7 +10,6 @@ const Tab1: React.FC<{ videoLink: string }> = ({ videoLink }) => {
     const location = useLocation()
     const params = new URLSearchParams(location.search)
     const link = params.get('link') || videoLink
-    const [audioSrc, setAudioSrc] = useState('')
     const [videoMetadata, setVideoMetadata] = useState({})
     const [audio, setAudio] = useState(new Audio())
     const [isPlaying, setIsPlaying] = useState(false)
@@ -24,7 +23,6 @@ const Tab1: React.FC<{ videoLink: string }> = ({ videoLink }) => {
     useEffect(() => {
 
         const retrieveMp3 = () => {
-            setAudioSrc('')
             const youtube = require('youtube-metadata-from-url');
             youtube.metadata(link).then(json => {
                 setVideoMetadata(json)
@@ -34,7 +32,6 @@ const Tab1: React.FC<{ videoLink: string }> = ({ videoLink }) => {
                 .then(resp => resp.json())
                 .then(json => {
                     const newAudio = new Audio(json['link'])
-                    setAudioSrc(json['link'])
                     setAudio(newAudio)
                 })
         }
