@@ -6,10 +6,7 @@ import { play, pause, playForward, playBack } from 'ionicons/icons';
 import './Tab1.css';
 
 const Tab1: React.FC<{ videoLink: string }> = ({ videoLink }) => {
-    // const [videoId] = useState(link)
-    const location = useLocation()
-    const params = new URLSearchParams(location.search)
-    const link = params.get('link') || videoLink
+    // const link = params.get('link') || videoLink
     const [videoMetadata, setVideoMetadata] = useState({})
     const [audio, setAudio] = useState(new Audio())
     const [isPlaying, setIsPlaying] = useState(false)
@@ -21,13 +18,13 @@ const Tab1: React.FC<{ videoLink: string }> = ({ videoLink }) => {
     audio.addEventListener('loadedmetadata', () => setDuration(audio.duration))
 
     useEffect(() => {
-
+        console.log(videoLink)
         const retrieveMp3 = () => {
             const youtube = require('youtube-metadata-from-url');
-            youtube.metadata(link).then(json => {
+            youtube.metadata(videoLink).then(json => {
                 setVideoMetadata(json)
             })
-            const id = link.split('/')[3]
+            const id = videoLink.split('/')[3]
             fetch("https://py-youtube-dl.vercel.app/api?id=" + id)
                 .then(resp => resp.json())
                 .then(json => {
@@ -35,10 +32,10 @@ const Tab1: React.FC<{ videoLink: string }> = ({ videoLink }) => {
                     setAudio(newAudio)
                 })
         }
-        if (link.length > 0) {
+        if (videoLink.length > 0) {
             retrieveMp3()
         }
-    }, [videoLink, link])
+    }, [videoLink])
 
     const playSong = () => {
         setIsPlaying(true)

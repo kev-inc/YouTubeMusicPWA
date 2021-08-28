@@ -33,6 +33,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import React, { useState } from 'react';
+import ListenerPage from './pages/Listener';
 
 const App: React.FC = () => {
 
@@ -41,8 +42,6 @@ const App: React.FC = () => {
     const playSong = (link) => {
         setVideoLink(link)
     }
-    
-
     return (
         <IonApp>
             <IonReactRouter>
@@ -56,6 +55,9 @@ const App: React.FC = () => {
                         </Route>
                         <Route path="/tab3">
                             <Tab3 />
+                        </Route>
+                        <Route path="/listen">
+                            <ListenerPage playSong={playSong}/>
                         </Route>
                         <Route exact path="/">
                             <Redirect to="/tab2" />
