@@ -1,6 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonThumbnail, IonLabel } from '@ionic/react';
 import './Tab3.css';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import moment from 'moment'
 import { useHistory } from 'react-router';
 
