@@ -6,7 +6,6 @@ import { play, pause, playForward, playBack } from 'ionicons/icons';
 import './Tab1.css';
 
 const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: string, link: string) => void }> = ({ videoLink, addToHistory }) => {
-    // const link = params.get('link') || videoLink
     const [videoMetadata, setVideoMetadata] = useState({})
     const [audio, setAudio] = useState(new Audio())
     const [isPlaying, setIsPlaying] = useState(false)
@@ -30,9 +29,14 @@ const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: stri
                 .then(json => {
                     const newAudio = new Audio(json['link'])
                     setAudio(newAudio)
+                    setIsPlaying(false)
+                    setCurrentDuration(0)
+                    setDuration(0)
                 })
         }
         if (videoLink.length > 0) {
+            audio.pause()
+            setAudio(new Audio())
             retrieveMp3()
         }
     }, [videoLink])
