@@ -27,7 +27,7 @@ const Tab2: React.FC<{playSong: (link: any) => void}> = ({playSong}) => {
                 </IonHeader>
                 <IonItem>
                     <IonLabel position="stacked">YouTube Link</IonLabel>
-                    <IonInput value={videoId} placeholder="Enter YouTube Link" onIonChange={e => setVideoId(e.detail.value!)}></IonInput>
+                    <IonInput value={videoId} placeholder="https://youtu.be/<video id>" onIonChange={e => setVideoId(e.detail.value!)}></IonInput>
                 </IonItem>
                 <IonButton expand="block" onClick={toPlayer}>Play!</IonButton>
             </IonContent>

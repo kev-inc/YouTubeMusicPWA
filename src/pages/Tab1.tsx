@@ -5,7 +5,7 @@ import { play, pause, playForward, playBack } from 'ionicons/icons';
 
 import './Tab1.css';
 
-const Tab1: React.FC<{ videoLink: string }> = ({ videoLink }) => {
+const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: string, link: string) => void }> = ({ videoLink, addToHistory }) => {
     // const link = params.get('link') || videoLink
     const [videoMetadata, setVideoMetadata] = useState({})
     const [audio, setAudio] = useState(new Audio())
@@ -18,11 +18,11 @@ const Tab1: React.FC<{ videoLink: string }> = ({ videoLink }) => {
     audio.addEventListener('loadedmetadata', () => setDuration(audio.duration))
 
     useEffect(() => {
-        console.log(videoLink)
         const retrieveMp3 = () => {
             const youtube = require('youtube-metadata-from-url');
             youtube.metadata(videoLink).then(json => {
                 setVideoMetadata(json)
+                addToHistory(json, id, videoLink)
             })
             const id = videoLink.split('/')[3]
             fetch("https://py-youtube-dl.vercel.app/api?id=" + id)

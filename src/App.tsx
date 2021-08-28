@@ -32,29 +32,50 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ListenerPage from './pages/Listener';
 
 const App: React.FC = () => {
 
     const [videoLink, setVideoLink] = useState('')
+    const [history, setHistory] = useState([])
+
+    useEffect(() => {
+        var list = JSON.parse(localStorage.getItem("history"))
+        if (!list) {
+            list = []
+        }
+        setHistory(list)
+    }, [])
 
     const playSong = (link) => {
         setVideoLink(link)
     }
+
+    const addToHistory = (json, videoId, link) => {
+        var list = JSON.parse(localStorage.getItem('history'))
+        if (!list) {
+            list = []
+        }
+        list = list.filter(obj => obj.id !== videoId)
+        list.unshift({timestamp: new Date(), link: link, id: videoId, thumbnail: json.thumbnail_url, title: json.title, author: json.author_name})
+        localStorage.setItem('history', JSON.stringify(list))
+        setHistory(list)
+    }
+
     return (
         <IonApp>
             <IonReactRouter>
                 <IonTabs>
                     <IonRouterOutlet>
                         <Route exact path="/tab1">
-                            <Tab1 videoLink={videoLink}/>
+                            <Tab1 videoLink={videoLink} addToHistory={addToHistory}/>
                         </Route>
                         <Route exact path="/tab2">
                             <Tab2 playSong={playSong}/>
                         </Route>
                         <Route path="/tab3">
-                            <Tab3 />
+                            <Tab3 history={history}/>
                         </Route>
                         <Route path="/listen">
                             <ListenerPage playSong={playSong}/>
