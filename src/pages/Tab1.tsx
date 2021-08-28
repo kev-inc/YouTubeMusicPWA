@@ -18,9 +18,11 @@ const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: stri
     //     positionUpdater = 
     // })
     // audio.addEventListener('stop', () => clearInterval(positionUpdater))
-
     useEffect(() => {
         setInterval(() => setCurrentDuration(audio.currentTime), 1000)
+    },[])
+
+    useEffect(() => {
         const retrieveMp3 = () => {
 
             const youtube = require('youtube-metadata-from-url');
