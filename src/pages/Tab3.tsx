@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 
 const Tab3: React.FC<{ history: any[] }> = ({ history }) => {
     const hist = useHistory()
-    
+
     const playHistory = (link) => {
         hist.replace({
             pathname: '/listen',
@@ -33,7 +33,8 @@ const Tab3: React.FC<{ history: any[] }> = ({ history }) => {
                         <IonLabel>
                             <h3>{item['title']}</h3>
                             <p>{item['author']}</p>
-                            <p>{moment(item['timestamp']).fromNow()}</p></IonLabel>
+                            <p>{moment(item['timestamp']).fromNow()}</p>
+                        </IonLabel>
                     </IonItem>
                 ))}
 
