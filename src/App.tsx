@@ -39,7 +39,9 @@ const App: React.FC = () => {
 
     const [videoLink, setVideoLink] = useState('')
     const [history, setHistory] = useState([])
+    const [searchQuery, setSearchQuery] = useState('')
     const [searchResults, setSearchResults] = useState([])
+    
 
     useEffect(() => {
         var list = JSON.parse(localStorage.getItem("history"))
@@ -73,7 +75,7 @@ const App: React.FC = () => {
                             <Tab1 videoLink={videoLink} addToHistory={addToHistory}/>
                         </Route>
                         <Route exact path="/tab2">
-                            <Tab2 searchResults={searchResults} setSearchResults={setSearchResults}/>
+                            <Tab2 searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchResults={searchResults} setSearchResults={setSearchResults}/>
                         </Route>
                         <Route path="/tab3">
                             <Tab3 history={history}/>

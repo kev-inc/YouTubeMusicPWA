@@ -3,9 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonInput, IonSpinner, IonThumbnail } from '@ionic/react';
 
-const Tab2: React.FC<{ searchResults: any[], setSearchResults: (result: any) => void }> = ({ searchResults, setSearchResults }) => {
+const Tab2: React.FC<{ searchQuery: string, setSearchQuery: (result: any) => void, searchResults: any[], setSearchResults: (result: any) => void }> = ({ searchQuery, setSearchQuery, searchResults, setSearchResults }) => {
     const history = useHistory()
-    const [query, setQuery] = useState('')
     const [isSearching, setIsSearching] = useState(false)
 
     useEffect(() => {
@@ -29,10 +28,11 @@ const Tab2: React.FC<{ searchResults: any[], setSearchResults: (result: any) => 
     }
 
     const search = (e) => {
+        const stripped = searchQuery.replace('https://youtu.be/', '')
         setSearchResults([])
         setIsSearching(true)
         e.preventDefault()
-        fetch("https://py-youtube-dl.vercel.app/api/search?query=" + query)
+        fetch("https://py-youtube-dl.vercel.app/api/search?query=" + stripped)
             .then(resp => resp.json())
             .then(data => {
                 setSearchResults(data['result'])
@@ -54,11 +54,13 @@ const Tab2: React.FC<{ searchResults: any[], setSearchResults: (result: any) => 
                         <IonTitle size="large">Search</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <IonItem>
-                    <form onSubmit={search}>
-                        <IonInput value={query} placeholder="Search YouTube" onIonChange={e => setQuery(e.detail.value!)}></IonInput>
-                    </form>
-                </IonItem>
+
+                <form onSubmit={search}>
+                    <IonItem>
+                        <IonInput value={searchQuery} placeholder="Search YouTube (or enter https://youtu.be/<id> link)" onIonChange={e => setSearchQuery(e.detail.value!)} clearInput></IonInput>
+                    </IonItem>
+                </form>
+
                 {searchResults.length > 0 && searchResults.map((item, index) => (
                     <IonItem onClick={() => toPlayer(item['id'])} key={index}>
                         <IonThumbnail slot="start">
