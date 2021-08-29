@@ -13,7 +13,7 @@ const Tab1: React.FC<{
     const [audio] = useState(new Audio())
     const [isPlaying, setIsPlaying] = useState(false)
     const [currentDuration, setCurrentDuration] = useState(0)
-    const [duration, setDuration] = useState(0)
+    const [duration, setDuration] = useState(1)
 
     // audio.addEventListener('loadedmetadata', () => setDuration(audio.duration))
     // audio.addEventListener('loadeddata', () => playSong())
