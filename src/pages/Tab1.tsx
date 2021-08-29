@@ -27,6 +27,7 @@ const Tab1: React.FC<{
     audio.onpause = () => setIsPlaying(false)
     
     useEffect(() => {
+        audio.play()
         setInterval(() => setCurrentDuration(audio.currentTime), 1000)
     },[])
 
@@ -64,7 +65,7 @@ const Tab1: React.FC<{
             pauseSong()
             audio.currentTime = 0
             setCurrentDuration(0)
-            setDuration(1)
+            setDuration(0)
             retrieveMp3()
         }
     }, [videoLink])
