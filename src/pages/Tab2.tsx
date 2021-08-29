@@ -11,10 +11,10 @@ const Tab2: React.FC<{ searchResults: any[], setSearchResults: (result: any) => 
     useEffect(() => {
         if (searchResults.length === 0) {
             setIsSearching(true)
-            fetch("https://py-youtube-dl.vercel.app/api/search?query=music")
+            fetch("https://py-youtube-dl.vercel.app/api/trending")
                 .then(resp => resp.json())
                 .then(data => {
-                    setSearchResults(data['result'])
+                    setSearchResults(data['videos'])
                     setIsSearching(false)
                 })
         }
