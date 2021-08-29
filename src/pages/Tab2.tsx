@@ -14,7 +14,7 @@ const Tab2: React.FC<{ searchResults: any[], setSearchResults: (result: any) => 
             fetch("https://py-youtube-dl.vercel.app/api/trending")
                 .then(resp => resp.json())
                 .then(data => {
-                    setSearchResults(data['videos'])
+                    setSearchResults(data['result'])
                     setIsSearching(false)
                 })
         }
