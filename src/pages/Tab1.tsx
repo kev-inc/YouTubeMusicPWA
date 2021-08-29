@@ -27,7 +27,6 @@ const Tab1: React.FC<{
     audio.onpause = () => setIsPlaying(false)
     
     useEffect(() => {
-        audio.play()
         setInterval(() => setCurrentDuration(audio.currentTime), 1000)
     },[])
 
@@ -43,6 +42,7 @@ const Tab1: React.FC<{
                         .then(resp => resp.json())
                         .then(resp => {
                             audio.src = resp['link']
+                            audio.load()
                             addToHistory({
                                 id: id,
                                 title: json.title,
