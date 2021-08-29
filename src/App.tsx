@@ -55,13 +55,13 @@ const App: React.FC = () => {
         setVideoLink(link)
     }
 
-    const addToHistory = (json, videoId, link) => {
+    const addToHistory = (item) => {
         var list = JSON.parse(localStorage.getItem('history'))
         if (!list) {
             list = []
         }
-        list = list.filter(obj => obj.id !== videoId)
-        list.unshift({timestamp: new Date(), link: link, id: videoId, thumbnail: json.thumbnail_url, title: json.title, author: json.author_name})
+        list = list.filter(obj => obj.id !== item.id)
+        list.unshift(item)
         localStorage.setItem('history', JSON.stringify(list))
         setHistory(list)
     }
@@ -72,7 +72,7 @@ const App: React.FC = () => {
                 <IonTabs>
                     <IonRouterOutlet>
                         <Route exact path="/tab1">
-                            <Tab1 videoLink={videoLink} addToHistory={addToHistory}/>
+                            <Tab1 videoLink={videoLink} history={history} addToHistory={addToHistory}/>
                         </Route>
                         <Route exact path="/tab2">
                             <Tab2 searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchResults={searchResults} setSearchResults={setSearchResults}/>

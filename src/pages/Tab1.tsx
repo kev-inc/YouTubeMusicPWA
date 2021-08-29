@@ -3,14 +3,17 @@ import React, { useState, useEffect } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonIcon, IonRange, IonLabel, IonFooter } from '@ionic/react';
 import { play, pause, playForward, playBack } from 'ionicons/icons';
 
-const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: string, link: string) => void }> = ({ videoLink, addToHistory }) => {
+const Tab1: React.FC<{ 
+    videoLink: string, 
+    history: any[],
+    addToHistory: (item: {}) => void 
+}> = ({ videoLink, history, addToHistory }) => {
+
     const [videoMetadata, setVideoMetadata] = useState({})
     const [audio] = useState(new Audio())
     const [isPlaying, setIsPlaying] = useState(false)
     const [currentDuration, setCurrentDuration] = useState(0)
     const [duration, setDuration] = useState(0)
-
-    // var positionUpdater
 
     audio.addEventListener('loadedmetadata', () => setDuration(audio.duration))
     audio.addEventListener('loadeddata', () => playSong())
@@ -22,18 +25,33 @@ const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: stri
 
     useEffect(() => {
         const retrieveMp3 = () => {
-
-            const youtube = require('youtube-metadata-from-url');
-            youtube.metadata(videoLink).then(json => {
-                setVideoMetadata(json)
-                addToHistory(json, id, videoLink)
-            })
             const id = videoLink.split('/')[3]
-            fetch("https://py-youtube-dl.vercel.app/api?id=" + id)
-                .then(resp => resp.json())
-                .then(json => {
-                    audio.src = json['link']
+            const videoIndex = history.findIndex(hist => hist.id === id)
+            if (videoIndex === -1) {
+                const youtube = require('youtube-metadata-from-url');
+                youtube.metadata(videoLink).then(json => {
+                    setVideoMetadata(json)
+                    fetch("https://py-youtube-dl.vercel.app/api?id=" + id)
+                        .then(resp => resp.json())
+                        .then(resp => {
+                            audio.src = resp['link']
+                            addToHistory({
+                                id: id,
+                                title: json.title,
+                                author_name: json.author_name,
+                                thumbnail_url: json.thumbnail_url,
+                                link: videoLink,
+                                audioSrc: resp['link'],
+                                timestamp: new Date()
+                            })
+                        })
                 })
+                
+            } else {
+                setVideoMetadata(history[videoIndex])
+                audio.src = history[videoIndex]['audioSrc']
+                addToHistory(history[videoIndex])
+            }
         }
         if (videoLink.length > 0) {
             pauseSong()
@@ -95,6 +113,7 @@ const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: stri
 
             <IonFooter class="ion-text-center ion-padding">
                 <h3>{videoMetadata['title']}</h3>
+                <p>{videoMetadata['author_name']}</p>                
                 <IonRange value={currentDuration} min={0} max={duration} onIonChange={seekSong} disabled={duration === 0}>
                     <IonLabel slot="start">{convertToTime(currentDuration)}</IonLabel>
                     <IonLabel slot="end">{convertToTime(duration)}</IonLabel>

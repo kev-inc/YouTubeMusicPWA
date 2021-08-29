@@ -28,11 +28,11 @@ const Tab3: React.FC<{ history: any[] }> = ({ history }) => {
                 {history.map((item, index) => (
                     <IonItem onClick={() => playHistory(item.link)} key={index}>
                         <IonThumbnail slot="start">
-                            <img src={item['thumbnail']} alt='thumbnail' />
+                            <img src={item['thumbnail_url']} alt='thumbnail' />
                         </IonThumbnail>
                         <IonLabel>
                             <h3>{item['title']}</h3>
-                            <p>{item['author']}</p>
+                            <p>{item['author_name']}</p>
                             <p>{moment(item['timestamp']).fromNow()}</p>
                         </IonLabel>
                     </IonItem>

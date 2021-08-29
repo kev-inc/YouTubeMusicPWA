@@ -3,7 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonInput, IonSpinner, IonThumbnail } from '@ionic/react';
 
-const Tab2: React.FC<{ searchQuery: string, setSearchQuery: (result: any) => void, searchResults: any[], setSearchResults: (result: any) => void }> = ({ searchQuery, setSearchQuery, searchResults, setSearchResults }) => {
+const Tab2: React.FC<{
+    searchQuery: string, 
+    setSearchQuery: (result: any) => void, 
+    searchResults: any[], 
+    setSearchResults: (result: any) => void 
+}> = ({ searchQuery, setSearchQuery, searchResults, setSearchResults }) => {
     const history = useHistory()
     const [isSearching, setIsSearching] = useState(false)
 
@@ -69,7 +74,7 @@ const Tab2: React.FC<{ searchQuery: string, setSearchQuery: (result: any) => voi
                         <IonLabel>
                             <h3>{item['title']}</h3>
                             <p>{item['channel']['name']}</p>
-                            <p>{item['duration']} • {item['publishedTime']}</p>
+                            <p>{item['duration']}</p>
                         </IonLabel>
                     </IonItem>
                 ))}
