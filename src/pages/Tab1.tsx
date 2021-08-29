@@ -15,10 +15,15 @@ const Tab1: React.FC<{
     const [currentDuration, setCurrentDuration] = useState(0)
     const [duration, setDuration] = useState(0)
 
-    audio.addEventListener('loadedmetadata', () => setDuration(audio.duration))
-    audio.addEventListener('loadeddata', () => playSong())
-    audio.addEventListener('play', () => setIsPlaying(true))
-    audio.addEventListener('pause', () => setIsPlaying(false))
+    // audio.addEventListener('loadedmetadata', () => setDuration(audio.duration))
+    // audio.addEventListener('loadeddata', () => playSong())
+    // audio.addEventListener('play', () => setIsPlaying(true))
+    // audio.addEventListener('pause', () => setIsPlaying(false))
+    audio.onloadedmetadata = () => setDuration(audio.duration)
+    audio.onloadeddata = () => playSong()
+    audio.onplay = () => setIsPlaying(true)
+    audio.onpause = () => setIsPlaying(false)
+    
     useEffect(() => {
         setInterval(() => setCurrentDuration(audio.currentTime), 1000)
     },[])
