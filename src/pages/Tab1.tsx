@@ -19,8 +19,10 @@ const Tab1: React.FC<{
     // audio.addEventListener('loadeddata', () => playSong())
     // audio.addEventListener('play', () => setIsPlaying(true))
     // audio.addEventListener('pause', () => setIsPlaying(false))
-    audio.onloadedmetadata = () => setDuration(audio.duration)
-    audio.onloadeddata = () => playSong()
+    audio.oncanplay = () => {
+        setDuration(audio.duration)
+        playSong()
+    }
     audio.onplay = () => setIsPlaying(true)
     audio.onpause = () => setIsPlaying(false)
     
