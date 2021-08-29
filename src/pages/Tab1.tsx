@@ -14,10 +14,8 @@ const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: stri
 
     audio.addEventListener('loadedmetadata', () => setDuration(audio.duration))
     audio.addEventListener('loadeddata', () => playSong())
-    // audio.addEventListener('play', () => {
-    //     positionUpdater = 
-    // })
-    // audio.addEventListener('stop', () => clearInterval(positionUpdater))
+    audio.addEventListener('play', () => setIsPlaying(true))
+    audio.addEventListener('pause', () => setIsPlaying(false))
     useEffect(() => {
         setInterval(() => setCurrentDuration(audio.currentTime), 1000)
     },[])
@@ -48,12 +46,10 @@ const Tab1: React.FC<{ videoLink: string, addToHistory: (json: {}, videoId: stri
 
     const playSong = () => {
         audio.play()
-        setIsPlaying(true)
     } 
 
     const pauseSong = () => {
         audio.pause()
-        setIsPlaying(false)
     }
 
     const forwardSong = () => {
