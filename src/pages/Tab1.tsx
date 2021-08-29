@@ -13,7 +13,7 @@ const Tab1: React.FC<{
     const [audio] = useState(new Audio())
     const [isPlaying, setIsPlaying] = useState(false)
     const [currentDuration, setCurrentDuration] = useState(0)
-    const [duration, setDuration] = useState(1)
+    const [duration, setDuration] = useState(0)
 
     // audio.addEventListener('loadedmetadata', () => setDuration(audio.duration))
     // audio.addEventListener('loadeddata', () => playSong())
@@ -64,7 +64,7 @@ const Tab1: React.FC<{
             pauseSong()
             audio.currentTime = 0
             setCurrentDuration(0)
-            setDuration(0)
+            setDuration(1)
             retrieveMp3()
         }
     }, [videoLink])
