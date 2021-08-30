@@ -25,6 +25,7 @@ const Tab3: React.FC<{ history: any[] }> = ({ history }) => {
                         <IonTitle size="large">History</IonTitle>
                     </IonToolbar>
                 </IonHeader>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/4EZPZ629Xgg" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                 {history.map((item, index) => (
                     <IonItem onClick={() => playHistory(item.link)} key={index}>
                         <IonThumbnail slot="start">
