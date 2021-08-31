@@ -2,7 +2,6 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonThumb
 import React, { useEffect } from 'react';
 import moment from 'moment'
 import { useHistory } from 'react-router';
-import YouTubePlayer from 'youtube-player';
 
 const HistoryTab: React.FC<{ history: any[] }> = ({ history }) => {
     const hist = useHistory()
