@@ -2,6 +2,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonThumb
 import React from 'react';
 import moment from 'moment'
 import { useHistory } from 'react-router';
+import YouTube, { Options } from 'react-youtube';
 
 const HistoryTab: React.FC<{ history: any[] }> = ({ history }) => {
     const hist = useHistory()
@@ -12,6 +13,15 @@ const HistoryTab: React.FC<{ history: any[] }> = ({ history }) => {
             search: '?link=' + link
         })
     }
+
+    const opts: Options = {
+      height: '390',
+      width: '640',
+      playerVars: {
+        // https://developers.google.com/youtube/player_parameters
+        autoplay: 1,
+      },
+    };
     return (
         <IonPage>
             <IonHeader>
@@ -25,6 +35,7 @@ const HistoryTab: React.FC<{ history: any[] }> = ({ history }) => {
                         <IonTitle size="large">History</IonTitle>
                     </IonToolbar>
                 </IonHeader>
+                <YouTube videoId='Wk1oClYJE58' opts={opts}/>
                 {history.map((item, index) => (
                     <IonItem onClick={() => playHistory(item.link)} key={index}>
                         <IonThumbnail slot="start">
