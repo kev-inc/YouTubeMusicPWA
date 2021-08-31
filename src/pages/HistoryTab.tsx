@@ -15,8 +15,18 @@ const HistoryTab: React.FC<{ history: any[] }> = ({ history }) => {
     }
 
     const onPauseYT = event => {
+        console.log(event)
+        // event.target.playVideo()
+    }
+
+    const onReady = event => {
         event.target.playVideo()
-        // event.stopPropagation();
+        document.addEventListener('visibilitychange', () => {
+            event.target.playVideo()
+            console.log(document.hidden)
+            
+        })
+        console.log(event.target)
     }
 
 
@@ -37,7 +47,7 @@ const HistoryTab: React.FC<{ history: any[] }> = ({ history }) => {
                         <IonTitle size="large">History</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <YouTube id='yt-player' videoId='Wk1oClYJE58' opts={opts} onStateChange={onPauseYT}/>
+                <YouTube id='yt-player' videoId='Wk1oClYJE58' opts={opts} onReady={onReady} onStateChange={onPauseYT}/>
                 {history.map((item, index) => (
                     <IonItem onClick={() => playHistory(item.link)} key={index}>
                         <IonThumbnail slot="start">
