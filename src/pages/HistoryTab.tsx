@@ -22,10 +22,10 @@ const HistoryTab: React.FC<{ history: any[] }> = ({ history }) => {
     }
 
 
-    const onPauseYT = event => {
-        console.log(event)
-        // event.target.playVideo()
-    }
+    // const onPauseYT = event => {
+    //     console.log(event)
+    //     // event.target.playVideo()
+    // }
 
     // const onReady = event => {
     //     event.target.playVideo()
