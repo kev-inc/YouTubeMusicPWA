@@ -11,7 +11,10 @@ const HistoryTab: React.FC<{ history: any[] }> = ({ history }) => {
         const player = YouTubePlayer('video-player');
         player.loadVideoById('Wk1oClYJE58');
         player.playVideo();
-        player.on('stateChange', e => e.target.playVideo())
+        player.on('stateChange', e => {
+            console.log(e.data)
+            e.target.playVideo()
+        })
     }, [])
 
     const playHistory = (link) => {
