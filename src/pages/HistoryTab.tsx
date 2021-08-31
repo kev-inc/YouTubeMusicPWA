@@ -14,6 +14,10 @@ const HistoryTab: React.FC<{ history: any[] }> = ({ history }) => {
         })
     }
 
+    const onPauseYT = event => {
+        event.target.playVideo()
+        // event.stopPropagation();
+    }
 
 
     const opts: Options = {
@@ -33,7 +37,7 @@ const HistoryTab: React.FC<{ history: any[] }> = ({ history }) => {
                         <IonTitle size="large">History</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <YouTube videoId='Wk1oClYJE58' opts={opts} onPause={event => event.target.playVideo()}/>
+                <YouTube id='yt-player' videoId='Wk1oClYJE58' opts={opts} onStateChange={onPauseYT}/>
                 {history.map((item, index) => (
                     <IonItem onClick={() => playHistory(item.link)} key={index}>
                         <IonThumbnail slot="start">
