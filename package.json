@@ -42,7 +42,8 @@
     "workbox-strategies": "^5.1.4",
     "workbox-streams": "^5.1.4",
     "youtube-metadata-from-url": "^1.0.3",
-    "youtube-player": "^5.5.2"
+    "youtube-player": "^5.5.2",
+    "yt-player": "^3.5.0"
   },
   "scripts": {
     "start": "react-scripts start",

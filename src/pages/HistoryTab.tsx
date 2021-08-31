@@ -8,13 +8,21 @@ const HistoryTab: React.FC<{ history: any[] }> = ({ history }) => {
     const hist = useHistory()
 
     useEffect(() => {
-        const player = YouTubePlayer('video-player');
-        player.loadVideoById('Wk1oClYJE58');
-        player.playVideo();
-        player.on('stateChange', e => {
-            console.log(e.data)
-            e.target.playVideo()
+        const YTPlayer = require('yt-player')
+        const player = new YTPlayer('#player', {
+            autoplay: true,
         })
+        player.load('Wk1oClYJE58')
+        player.on('paused', () => {
+            player.play()
+        })
+        // const player = YouTubePlayer('video-player');
+        // player.loadVideoById('Wk1oClYJE58');
+        // player.playVideo();
+        // player.on('stateChange', e => {
+        //     console.log(e.data)
+        //     e.target.playVideo()
+        // })
     }, [])
 
     const playHistory = (link) => {
@@ -53,7 +61,7 @@ const HistoryTab: React.FC<{ history: any[] }> = ({ history }) => {
                         <IonTitle size="large">History</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <div id='video-player'></div>
+                <div id='player'></div>
                 {/* <YouTube id='yt-player' videoId='Wk1oClYJE58' opts={opts} onReady={onReady} onStateChange={onPauseYT}/> */}
                 {history.map((item, index) => (
                     <IonItem onClick={() => playHistory(item.link)} key={index}>
