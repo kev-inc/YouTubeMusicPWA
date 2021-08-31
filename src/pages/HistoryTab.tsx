@@ -14,13 +14,11 @@ const HistoryTab: React.FC<{ history: any[] }> = ({ history }) => {
         })
     }
 
+
+
     const opts: Options = {
       height: '390',
       width: '640',
-      playerVars: {
-        // https://developers.google.com/youtube/player_parameters
-        autoplay: 1,
-      },
     };
     return (
         <IonPage>
@@ -35,7 +33,7 @@ const HistoryTab: React.FC<{ history: any[] }> = ({ history }) => {
                         <IonTitle size="large">History</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <YouTube videoId='Wk1oClYJE58' opts={opts}/>
+                <YouTube videoId='Wk1oClYJE58' opts={opts} onPause={event => event.target.playVideo()}/>
                 {history.map((item, index) => (
                     <IonItem onClick={() => playHistory(item.link)} key={index}>
                         <IonThumbnail slot="start">
